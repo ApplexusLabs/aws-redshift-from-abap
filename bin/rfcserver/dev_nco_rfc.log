@@ -1,0 +1,58 @@
+
+**** Log file opened by process 4864 at 2016-11-07 12:48:06 (UTC+02:00 Финляндия (зима))
+
+SAP .NET Connector 3.0 with file version 3.0.17.0 running on 64-bit .NET Framework 4.0.30319.34209
+Program: D:\MEGA\aws_app2\RFC_SERV\server\sap2redshift.exe
+Working directory: D:\MEGA\aws_app2\RFC_SERV\server
+Operating system: Windows 7 Ultimate 64-bit Service Pack 1
+Processor: 4x AMD64 (or x64)
+SAP release: 721, Kernel release: 721, Kernel patch level: 623
+Hostname: SAPSRV, IP address: 192.168.172.1, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2016-11-07 12:48:07.030 [Thread 1]
+Failure to create pool for destination SAP_CLIENT (ORIGINAL) [CLIENT=001 LANG=EN ASHOST=localhost SYSNR=00 SAPROUTER= GWHOST=localhost GWSERV=SAPGW01 NAME=SAP_CLIENT POOL_SIZE=1 MAX_POOL_SIZE=1 PROGRAM_ID=AWSREDSHIFT_RFC REPOSITORY_DESTINATION=SAP_CLIENT REG_COUNT=1 USER=anyuser PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host sapsrv with Unicode
+ERROR       partner '127.0.0.1:SAPGW01' not reached
+TIME        Mon Nov 07 12:48:06 2016
+RELEASE     721
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3283
+DETAIL      NiPConnect2: 127.0.0.1:3301
+SYSTEM CALL connect
+ERRNO       10061
+ERRNO TEXT  WSAECONNREFUSED: Connection refused
+COUNTER     2
+
+   в SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options, Boolean forRepository)
+   в SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcDestination destination, Boolean forRepository)
+   в SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination destination, Boolean forRepositoryCalls)
+>> Error entry 2016-11-07 12:48:07.030 [Thread 1]
+[CLIENT=001 LANG=EN ASHOST=localhost SYSNR=00 SAPROUTER= GWHOST=localhost GWSERV=SAPGW01 NAME=SAP_CLIENT POOL_SIZE=1 MAX_POOL_SIZE=1 PROGRAM_ID=AWSREDSHIFT_RFC REPOSITORY_DESTINATION=SAP_CLIENT REG_COUNT=1 USER=anyuser PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host sapsrv with Unicode
+ERROR       partner '127.0.0.1:SAPGW01' not reached
+TIME        Mon Nov 07 12:48:06 2016
+RELEASE     721
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3283
+DETAIL      NiPConnect2: 127.0.0.1:3301
+SYSTEM CALL connect
+ERRNO       10061
+ERRNO TEXT  WSAECONNREFUSED: Connection refused
+COUNTER     2
+
+   в SAP.Middleware.Connector.CpicConnection.ConnectAsClient(Dictionary`2 options, Boolean forRepository)
+   в SAP.Middleware.Connector.RfcConnection.ConnectAsClient(RfcDestination destination, Boolean forRepository)
+   в SAP.Middleware.Connector.RfcConnectionPool..ctor(RfcDestination destination, Boolean forRepositoryCalls)
+   в SAP.Middleware.Connector.RfcConnectionPool.GetPool(RfcDestination destination, Boolean forRepository, Boolean create)
+   в SAP.Middleware.Connector.RfcDestination.GetClient(Boolean forRepository)
+   в SAP.Middleware.Connector.RfcDestination.Ping()

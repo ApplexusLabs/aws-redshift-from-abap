@@ -1,0 +1,13 @@
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\bin\Debug\sap2redshift.exe.config
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\bin\Debug\sap2redshift.exe.manifest
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\bin\Debug\sap2redshift.application
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\bin\Debug\sap2redshift.exe
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\bin\Debug\sap2redshift.pdb
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\bin\Debug\System.Net.Http.dll
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\bin\Debug\System.Net.Http.xml
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\obj\Debug\sap2redshift.csprojResolveAssemblyReference.cache
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\obj\Debug\sap2redshift.TrustInfo.xml
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\obj\Debug\sap2redshift.exe.manifest
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\obj\Debug\sap2redshift.application
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\obj\Debug\sap2redshift.exe
+C:\RK\Applexus\Cloud\Code\RFC_SERV\RFC_SERV\source\sap2redshift\sap2redshift\obj\Debug\sap2redshift.pdb

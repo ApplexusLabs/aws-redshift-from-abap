@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SETTINGS>
+  <SAP>
+  <CLIENT>001</CLIENT>
+  <LANG>EN</LANG>
+  <ASHOST>localhost</ASHOST>
+  <SYSNR>00</SYSNR>
+  <SAPRouter></SAPRouter>
+  <GWHOST>localhost</GWHOST>
+  <GWSERV>SAPGW01</GWSERV>
+  <NAME>SAP_CLIENT</NAME>
+  <POOL_SIZE>1</POOL_SIZE>
+  <MAX_POOL_SIZE>1</MAX_POOL_SIZE>
+  <PROGRAM_ID>AWSREDSHIFT_RFC</PROGRAM_ID>
+  <REPOSITORY_DESTINATION>SAP_CLIENT</REPOSITORY_DESTINATION>
+  <REG_COUNT>1</REG_COUNT>
+  <USER>anyuser</USER>
+  <PASSWD>anypass</PASSWD>
+    </SAP>
+<REDSHIFT>
+  <SERVER>xxx-instance.crdr0eapotgd.us-west-2.redshift.amazonaws.com</SERVER>
+  <PORT>5439</PORT>
+  <DB>db_test</DB>
+  <USER>anyuser</USER>
+  <PASSWORD>anypassword</PASSWORD>
+  <KEEPALIVE>1</KEEPALIVE>
+</REDSHIFT>
+</SETTINGS>

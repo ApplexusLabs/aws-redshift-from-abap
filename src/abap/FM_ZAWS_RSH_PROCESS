@@ -1,0 +1,99 @@
+FUNCTION zaws_rsh_process.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(IV_NONQUERY) TYPE  CHAR1
+*"     REFERENCE(IV_SQL) TYPE  STRING
+*"  EXPORTING
+*"     REFERENCE(ET_METADATA) TYPE  ZAWS_RSH_T_METADATA
+*"     REFERENCE(EO_DATA) TYPE REF TO  DATA
+*"     REFERENCE(EV_ROWS) TYPE  I
+*"----------------------------------------------------------------------
+
+
+  DATA: lt_metadata TYPE zaws_rsh_t_metadata,
+        ls_metadata TYPE zaws_rsh_s_metadata,
+        lv_xml TYPE xstring,
+        lv_stat,
+        lv_msg TYPE c LENGTH 255.
+
+  DATA: lo_strudescr TYPE REF TO cl_abap_structdescr.
+  DATA: lt_components TYPE cl_abap_structdescr=>component_table,
+        lo_tableline TYPE REF TO data,
+        lv_length TYPE i,
+        lv_decimals TYPE i.
+
+  FIELD-SYMBOLS: <ls_component> LIKE LINE OF lt_components,
+                 <ls_tableline> TYPE any,
+                 <lt_table> TYPE table.
+
+
+*CALL AWS via .net connector+odbc
+  CALL FUNCTION 'ZAWS_RSH_EXEC_QUERY'
+    DESTINATION 'AWSREDSHIFT'
+    EXPORTING
+      iv_nonquery           = iv_nonquery
+      iv_sql                = iv_sql
+    IMPORTING
+      et_metadata           = lt_metadata
+      ev_data               = lv_xml
+      ev_statuscode         = lv_stat
+    EXCEPTIONS
+      system_failure        = 1  MESSAGE lv_msg
+      communication_failure = 2  MESSAGE lv_msg
+      OTHERS                = 3.
+
+*create structure and table
+  LOOP AT lt_metadata INTO ls_metadata.
+
+    APPEND INITIAL LINE TO lt_components ASSIGNING <ls_component>.
+
+    <ls_component>-name = ls_metadata-fieldname.
+
+    CASE ls_metadata-type.
+      WHEN 'Int32'.
+        <ls_component>-type ?= cl_abap_elemdescr=>describe_by_name( 'INT4'  ).
+      WHEN 'Int16' OR 'Single'.
+        <ls_component>-type ?= cl_abap_elemdescr=>describe_by_name( 'INT2'  ).
+      WHEN 'Decimal'.
+        lv_length = ls_metadata-length.
+        lv_decimals = ls_metadata-decimals.
+        <ls_component>-type = cl_abap_elemdescr=>get_p( p_length = lv_length p_decimals = lv_decimals ).
+      WHEN 'String'.
+        <ls_component>-type = cl_abap_elemdescr=>get_string( ).
+      WHEN 'DateTime'.
+        <ls_component>-type ?= cl_abap_elemdescr=>describe_by_name( 'TIMESTAMP'  ).
+
+      WHEN 'Byte'.
+        <ls_component>-type ?= cl_abap_elemdescr=>describe_by_name( 'INT1'  ).
+
+      WHEN 'Boolean'.
+        <ls_component>-type = cl_abap_elemdescr=>get_c( p_length = 5 ).
+      WHEN OTHERS.
+        " ???? TODO: implement all types
+    ENDCASE.
+  ENDLOOP.
+
+  IF lt_components IS NOT INITIAL.
+    lo_strudescr = cl_abap_structdescr=>create( p_components = lt_components ).
+    CREATE DATA lo_tableline TYPE HANDLE lo_strudescr.
+    ASSIGN lo_tableline->* TO <ls_tableline>.
+
+    CREATE DATA eo_data LIKE TABLE OF <ls_tableline>.
+    ASSIGN eo_data->* TO <lt_table>.
+
+    " call transformation
+    TRY.
+        CALL TRANSFORMATION id
+        SOURCE XML lv_xml
+        RESULT table = <lt_table>.
+
+      CATCH cx_root.
+    ENDTRY.
+  ENDIF.
+
+  " send metadata, data reference has been already assigned
+  et_metadata = lt_metadata.
+  ev_rows = lv_stat.
+
+ENDFUNCTION.
