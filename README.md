@@ -35,7 +35,8 @@ We can create a little gateway using the SAP RFC .NET connectors as well as the 
 3. Configure SAP Netweaver RFC Destination
 4. Create the SAP Function Modules
 5. (Optional) Create SQL Console Program
-6. Profit!
+6. Test It
+7. Profit!
 
 ## 1. Gather the Prerequisites
 
@@ -159,7 +160,7 @@ With your FM ready to use, we can implement it directly in our imaginary slightl
 
 A document covering the details of building out such a thing is located in the repo at `/src/abap/Z_REDSHIFT_COCKPIT/`.
 
-##6. Profit!
+##6. Test It
 From the PSQL console:
 ![redshift_query_psql](./img/redshift-query-psql.png)
 
@@ -172,5 +173,14 @@ Here are some screenshots showing interacting with Redshift from within SAP.
 
 ![select3](./img/select3.png)
 
+##7. Profit!
+Hopefully this project has given you some hints on one way to integrate AWS Redshift with SAP Netweaver systems.  What we've done is quite basic, thought just passing SQL commands, but you could use that basic interaction to do some interesting things:
+
+- Trigger data import commands within Redshift given an event in SAP ECC
+- Insert data directly into Redshift from SAP Netweaver  (how about a data warehouse alternative to SAP BW anyone?)
+- Call User Defined Functions (UDF) within Redshift, encapsulating complex data-intensive business logic
+- Access large repositories of structured data in a platform optimized for that kind of thing 
+
+Please let me know if you come up with new ways to integrate these two powerful platforms! 
 
 
