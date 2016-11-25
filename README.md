@@ -94,7 +94,7 @@ Now, crank that puppy up and you should see something like this.
 ##3. Configure SAP Netweaver RFC Destination
 This configuration is done on the SAP side to create a connection between the SAP system and the RFC listener on the .NET program. In `tcode SM59`, create an RFC Destination of Type 'T'.  Notice the Program ID matches the `PROGRAM_ID` in our `settings.xml` file from Step 2. 
 
-![sm59.png](.img/sm59.png)
+![sm59.png](./img/sm59.png)
 
 Next we need to create/maintain the `secinfo` and `reginfo` files.  These files are part of the security configuration to prevent the execution of external programs.  IN our case, we're going to set them wide open but in a production scenario, you'd want more granular configuration.  You can read more about these [Gateway Security Files in SAP's Help Portal](https://help.sap.com/saphelp_nw73/helpdata/en/e2/16d0427a2440fc8bfc25e786b8e11c/content.htm?frameset=/en/e2/16d0427a2440fc8bfc25e786b8e11c/frameset.htm&current_toc=/en/1d/bc8ac3c2604d678840c421c591a0a8/plain.htm&node_id=9).
 
@@ -112,9 +112,32 @@ If you want to test out the connection now, you can start the RFC Server program
 
 ![ping_test](./img/ping_test.png)
 
-
-
 ## 4. Create the SAP Function Modules
+Next, we have to lay down some ABAP code to interact with the RFC Server.  First, we create a sort of proxy for the RFC server...its just an empty function module that's setup to point to the RFC Destination as a remote function.  We also have to create a structure to handle the metadata.
+
+![metadata](./img/metadata.png)
+
+![function](./img/function.png)
+
+The source code for the function module is truly empty.  We're just creating a pass-through structure.
+
+```ABAP
+FUNCTION ZAWS_RSH_EXEC_QUERY.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     VALUE(IV_NONQUERY) TYPE  BOOLE_D DEFAULT 'X'
+*"     VALUE(IV_SQL) TYPE  STRING
+*"  EXPORTING
+*"     VALUE(ET_METADATA) TYPE  ZAWS_RSH_T_METADATA
+*"     VALUE(EV_DATA) TYPE  XSTRING
+*"     VALUE(EV_STATUSCODE) TYPE  CHAR1
+*"----------------------------------------------------------------------
+
+* Look Ma, no code!
+
+ENDFUNCTION.
+```
 
 ## 5. Run the RFC Server
 
