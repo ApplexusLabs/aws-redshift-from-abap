@@ -27,7 +27,7 @@ SAP Netweaver has ways to remotely connect to other databases via the DBCON meth
 
 We can create a little gateway using the SAP RFC .NET connectors as well as the Redshift ODBC connectors.  This little gateway will run as a process on some small Windows 2012 machine on premesis or on AWS EC2 and do nothing other than act as a gateway.  ABAP code will call the "virtual" function module defined in the SAP ECC system and submit a SQL string.  The SQL will then be forwarded to Redshift where it will be executed.  The results are then sent back in an array through the RFC back to the function module and to the ABAP code.
 
-(! image of arch here)
+![logic_flow](../img/logic_flow.png)
 
 ## The Steps
 1.
