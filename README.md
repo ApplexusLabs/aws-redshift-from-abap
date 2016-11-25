@@ -31,7 +31,7 @@ We can create a little gateway using the SAP RFC .NET connectors as well as the 
 
 ## The Steps
 1. Gather the Prerequisites
-2. Start up the .NET RFC Server
+2. Configure the .NET RFC Server
 3. Configure SAP Netweaver RFC Destination
 4. Create the SAP Function Modules
 5. Run the RFC Server
@@ -67,7 +67,7 @@ Once you're comfortable with the RFC Server and compiled your own version, drop 
   <NAME>SAP_CLIENT</NAME>
   <POOL_SIZE>1</POOL_SIZE>
   <MAX_POOL_SIZE>1</MAX_POOL_SIZE>
-  <PROGRAM_ID>AWSREDSHIFT_RFC</PROGRAM_ID>
+  <PROGRAM_ID>AWSREDSHIFT_RFC_1</PROGRAM_ID>
   <REPOSITORY_DESTINATION>SAP_CLIENT</REPOSITORY_DESTINATION>
   <REG_COUNT>1</REG_COUNT>
   <USER>anyuser</USER>
@@ -87,7 +87,29 @@ The SAP section contains all the info from the SAP Netweaver system that you'll 
 
 The Redshift section contains the login information for the respective Redshift cluster.  Remember to use the cluster name rather than any individual instance name.
 
+Now, crank that puppy up and you should see something like this.
 
+![startup](./img/startup.png)
+
+##3. Configure SAP Netweaver RFC Destination
+This configuration is done on the SAP side to create a connection between the SAP system and the RFC listener on the .NET program. In `tcode SM59`, create an RFC Destination of Type 'T'.  Notice the Program ID matches the `PROGRAM_ID` in our `settings.xml` file from Step 2. 
+
+![sm59.png](.img/sm59.png)
+
+Next we need to create/maintain the `secinfo` and `reginfo` files.  These files are part of the security configuration to prevent the execution of external programs.  IN our case, we're going to set them wide open but in a production scenario, you'd want more granular configuration.  You can read more about these [Gateway Security Files in SAP's Help Portal](https://help.sap.com/saphelp_nw73/helpdata/en/e2/16d0427a2440fc8bfc25e786b8e11c/content.htm?frameset=/en/e2/16d0427a2440fc8bfc25e786b8e11c/frameset.htm&current_toc=/en/1d/bc8ac3c2604d678840c421c591a0a8/plain.htm&node_id=9).
+
+![SMGW-navigation](./img/SMGW-navigation.png)
+
+![secinfo](./img/secinfo.png)
+
+![reginfo](./img/reginfo.png)
+
+
+## 4. Create the SAP Function Modules
+
+## 5. Run the RFC Server
+
+##6. Profit!
 
 
 
