@@ -34,7 +34,7 @@ We can create a little gateway using the SAP RFC .NET connectors as well as the 
 2. Configure the .NET RFC Server
 3. Configure SAP Netweaver RFC Destination
 4. Create the SAP Function Modules
-5. Run the RFC Server
+5. (Optional) Create SQL Console Program
 6. Profit!
 
 ## 1. Gather the Prerequisites
@@ -87,10 +87,6 @@ The SAP section contains all the info from the SAP Netweaver system that you'll 
 
 The Redshift section contains the login information for the respective Redshift cluster.  Remember to use the cluster name rather than any individual instance name.
 
-Now, crank that puppy up and you should see something like this.
-
-![startup](./img/startup.png)
-
 ##3. Configure SAP Netweaver RFC Destination
 This configuration is done on the SAP side to create a connection between the SAP system and the RFC listener on the .NET program. In `tcode SM59`, create an RFC Destination of Type 'T'.  Notice the Program ID matches the `PROGRAM_ID` in our `settings.xml` file from Step 2. 
 
@@ -138,10 +134,43 @@ FUNCTION ZAWS_RSH_EXEC_QUERY.
 
 ENDFUNCTION.
 ```
+Next we create the function module that will actually make the call to the RFC Server and process the results.  The source code for this FM is in this repo under `src/abap/FM_ZAWS_RSH_PROCESS`.  
 
-## 5. Run the RFC Server
+Here's the real business of the FM:
+```ABAP
+*CALL AWS via .net connector+odbc
+  CALL FUNCTION 'ZAWS_RSH_EXEC_QUERY'
+    DESTINATION 'AWSREDSHIFT'           " <---  Notice the RFC Destination here...this is key!
+    EXPORTING
+      iv_nonquery           = iv_nonquery
+      iv_sql                = iv_sql
+    IMPORTING
+      et_metadata           = lt_metadata
+      ev_data               = lv_xml
+      ev_statuscode         = lv_stat
+    EXCEPTIONS
+      system_failure        = 1  MESSAGE lv_msg
+      communication_failure = 2  MESSAGE lv_msg
+      OTHERS                = 3.
+```
+
+## 5. (Optional) Create SQL Console Program
+With your FM ready to use, we can implement it directly in our imaginary slightly customized z-versions of SAP ECC screens.  Optionally, you can create a little utility program to allow you to submit SQL directly from SAP.
+
+A document covering the details of building out such a thing is located in the repo at `/src/abap/Z_REDSHIFT_COCKPIT/`.
 
 ##6. Profit!
+From the PSQL console:
+![redshift_query_psql](./img/redshift-query-psql.png)
+
+Here are some screenshots showing interacting with Redshift from within SAP.
+![select0](./img/select0.png)
+
+![select1](./img/select1.png)
+
+![select2](./img/select2.png)
+
+![select3](./img/select3.png)
 
 
 
