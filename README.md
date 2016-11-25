@@ -104,6 +104,15 @@ Next we need to create/maintain the `secinfo` and `reginfo` files.  These files 
 
 ![reginfo](./img/reginfo.png)
 
+If you want to test out the connection now, you can start the RFC Server program and you should be able to get a good connection test.
+
+![rfc_server](./img/rfc_server.png)
+
+![gateway_monitor](./img/gateway_monitor.png)
+
+![ping_test](./img/ping_test.png)
+
+
 
 ## 4. Create the SAP Function Modules
 
